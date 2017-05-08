@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-7 21:12:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.oracle.orm.PWareInfoVersion" table="P_WARE_INFO_VERSION" schema="SCOTT">
+        <id name="versionNo" type="long">
+            <column name="VERSION_NO" precision="10" scale="0" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="NAME" length="20" not-null="true" />
+        </property>
+        <property name="des" type="string">
+            <column name="DES" length="50" />
+        </property>
+        <property name="username" type="string">
+            <column name="USERNAME" length="20" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <property name="equipPassType" type="string">
+            <column name="EQUIP_PASS_TYPE" length="40" />
+        </property>
+        <property name="effectTime" type="string">
+            <column name="EFFECT_TIME" length="14" not-null="true" />
+        </property>
+        <property name="utilityInfo" type="string">
+            <column name="UTILITY_INFO" length="8" not-null="true" />
+        </property>
+        <set name="PWareInfos" table="P_WARE_INFO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="VERSION_NO" precision="10" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="org.ecnu.oracle.orm.PWareInfo" />
+        </set>
+    </class>
+</hibernate-mapping>

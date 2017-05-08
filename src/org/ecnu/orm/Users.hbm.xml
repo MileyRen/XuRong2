@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-13 12:14:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.Users" table="users" catalog="xurong2">
+        <id name="userId" type="java.lang.Long">
+            <column name="USER_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="role" class="org.ecnu.orm.Role" fetch="select" lazy="false">
+            <column name="USER_ROLE_ID" />
+        </many-to-one>
+        <many-to-one name="userGroup" class="org.ecnu.orm.UserGroup" fetch="select" lazy="false">
+            <column name="USER_GROUP_ID" />
+        </many-to-one>
+        <property name="userName" type="string">
+            <column name="USER_NAME" length="20" not-null="true" unique="true" />
+        </property>
+        <property name="passWord" type="string">
+            <column name="PASS_WORD" length="32" />
+        </property>
+        <property name="employeeName" type="string">
+            <column name="EMPLOYEE_NAME" length="100" />
+        </property>
+        <property name="personList" type="string">
+            <column name="PERSON_LIST" length="100" />
+        </property>
+        <property name="leaderId" type="java.lang.Long">
+            <column name="LEADER_ID" />
+        </property>
+        <property name="userStatus" type="string">
+            <column name="USER_STATUS" length="1" />
+        </property>
+        <set name="profits" table="profit" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Profit" />
+        </set>
+        <set name="depots" table="depot" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Depot" />
+        </set>
+        <set name="moneies" table="money" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Money" />
+        </set>
+    </class>
+</hibernate-mapping>

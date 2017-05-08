@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-7 21:12:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.oracle.orm.PWareInfo" table="P_WARE_INFO" schema="SCOTT">
+        <composite-id name="id" class="org.ecnu.oracle.orm.PWareInfoId">
+            <key-property name="versionNo" type="long">
+                <column name="VERSION_NO" precision="10" scale="0" />
+            </key-property>
+            <key-property name="passNo" type="string">
+                <column name="PASS_NO" length="6" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="PWareInfoVersion" class="org.ecnu.oracle.orm.PWareInfoVersion" update="false" insert="false" fetch="select" lazy="false">
+            <column name="VERSION_NO" precision="10" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="PGoodsInfo" class="org.ecnu.oracle.orm.PGoodsInfo" fetch="select" lazy="false">
+            <column name="WARE_ID" length="32" not-null="true" />
+        </many-to-one>
+        <property name="warePrice" type="long">
+            <column name="WARE_PRICE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="maxWareContent" type="short">
+            <column name="MAX_WARE_CONTENT" precision="3" scale="0" not-null="true" />
+        </property>
+        <property name="stdWareOuts" type="short">
+            <column name="STD_WARE_OUTS" precision="3" scale="0" not-null="true" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <property name="idUseFlag" type="string">
+            <column name="ID_USE_FLAG" length="2" not-null="true" />
+        </property>
+        <property name="reserve" type="string">
+            <column name="RESERVE" length="6" />
+        </property>
+    </class>
+</hibernate-mapping>

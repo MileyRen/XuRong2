@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+.index_tab{width:100%;border-collapse:collapse;border:1px solid #005892;margin:8px 0;}
+.index_tab td{line-height:30px;border:1px solid #005892;padding-left:4px;}
+tr.tr_top td{line-height:30px;border:none;background-color:#005892;color:#fff;font-weight:bold;}
+td.td_center{text-align:center;}
+.ys01{background-color:#E6F0FE;}
+.div{width:100%;border-collapse:collapse;border:1px solid #005892;margin:8px 0;
+line-height:35px;border:1px solid #005892;padding-left:4px;
+background-color:#005892;color:#fff;font-weight:bold;}
+
+input.button{ 
+border: 3px double #7BC76B; 
+height: 18px; 
+width: 85px; 
+background-color: #F2F2F2; 
+font-size: 12px; 
+padding-top: 1px; 
+cursor: hand; 
+FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#B3D997);
+}

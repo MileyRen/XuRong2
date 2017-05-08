@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-13 12:14:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.Role" table="role" catalog="xurong2">
+        <id name="roleId" type="java.lang.Long">
+            <column name="ROLE_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="roleName" type="string">
+            <column name="ROLE_NAME" length="50" />
+        </property>
+        <property name="roleDesc" type="string">
+            <column name="ROLE_DESC" length="50" />
+        </property>
+        <property name="roleFlag" type="java.lang.Long">
+            <column name="ROLE_FLAG" />
+        </property>
+        <property name="userRole" type="string">
+            <column name="USER_ROLE" length="10" />
+        </property>
+        <property name="roleRole" type="string">
+            <column name="ROLE_ROLE" length="10" />
+        </property>
+        <property name="nodeRole" type="string">
+            <column name="NODE_ROLE" length="10" />
+        </property>
+        <property name="wareRole" type="string">
+            <column name="WARE_ROLE" length="10" />
+        </property>
+        <property name="mapRole" type="string">
+            <column name="MAP_ROLE" length="10" />
+        </property>
+        <property name="channelRole" type="string">
+            <column name="CHANNEL_ROLE" length="10" />
+        </property>
+        <property name="importRole" type="string">
+            <column name="IMPORT_ROLE" length="10" />
+        </property>
+        <property name="optempRole" type="string">
+            <column name="OPTEMP_ROLE" length="10" />
+        </property>
+        <property name="depotRole" type="string">
+            <column name="DEPOT_ROLE" length="10" />
+        </property>
+        <property name="moneyRole" type="string">
+            <column name="MONEY_ROLE" length="10" />
+        </property>
+        <property name="profitRole" type="string">
+            <column name="PROFIT_ROLE" length="10" />
+        </property>
+        <set name="userses" table="users" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ROLE_ID" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Users" />
+        </set>
+    </class>
+</hibernate-mapping>

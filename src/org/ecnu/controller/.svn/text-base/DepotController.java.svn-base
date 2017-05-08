@@ -1,0 +1,467 @@
+package org.ecnu.controller;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
+import org.ecnu.orm.Depot;
+import org.ecnu.orm.DepotHis;
+import org.ecnu.orm.MoneyHis;
+import org.ecnu.orm.MyStock;
+import org.ecnu.orm.Shipping;
+import org.ecnu.orm.Users;
+import org.ecnu.orm.Wares;
+import org.ecnu.service.DepotHisService;
+import org.ecnu.service.DepotService;
+import org.ecnu.service.MoneyService;
+import org.ecnu.service.MyStockService;
+import org.ecnu.service.ShippingService;
+import org.ecnu.service.UserService;
+import org.ecnu.service.WaresService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller("depotController")
+public class DepotController {
+	@Autowired
+	private DepotService ds;
+	
+	@Autowired
+	private DepotHisService dhs;
+	
+	@Autowired
+	private UserService us;
+	
+	@Autowired
+	private MoneyService ms;
+	
+	@Autowired
+	private WaresService ws;
+	
+	@Autowired
+	private ShippingService ss;
+	
+	@Autowired
+	private MyStockService mss;
+	
+	/**
+	 * 
+	 * @return
+	 */	
+	@RequestMapping("/to_depot_page_3")
+	public ModelAndView depotPage()
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotSearch");
+		
+		List<Users> users=us.searchAllEmp();//有效的搜索所有营业员
+		mav.addObject("users", users);
+		
+		List<Wares> wares=ws.searchAllWare();
+		mav.addObject("wares", wares);
+
+		return mav;
+	}
+	
+	/**
+	 * 查询全部在his中，his包含所有信息；depot只包含当月未被清算的信息
+	 * @param pageNo
+	 * @param depot
+	 * @param mint
+	 * @param maxt
+	 * @return
+	 */
+	@RequestMapping("/do_depot_search_3")
+	public ModelAndView depotSearch(@RequestParam("PageNo") int pageNo, DepotHis depot, @RequestParam("mintime") String mint, @RequestParam("maxtime") String maxt)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotSearch");
+		
+		List<Users> users=us.searchAllEmp();//有效的搜索所有营业员
+		mav.addObject("users", users);
+		
+		List<Wares> wares=ws.searchAllWare();
+		mav.addObject("wares", wares);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
+		
+		String ltime, rtime;
+		if(mint.trim().equals("")||mint.trim().length()==0)ltime="20130415000001";
+		else ltime=mint+"000001";
+		if(maxt.trim().equals("")||maxt.trim().length()==0)rtime=sdf.format(now);
+		else rtime=maxt+"235959";
+
+		mav.addObject("depotlist", dhs.search(depot, ltime, rtime, pageNo));
+		long rows = dhs.countRows(depot, ltime, rtime);
+		mav.addObject("length", ((rows%10 )!=0 )?(rows/10+1):(rows/10));
+		mav.addObject("PageNo", pageNo);
+		mav.addObject("d", depot);
+		mav.addObject("ltime",mint);
+		mav.addObject("rtime",maxt);
+		
+		return mav;
+	}
+	/*
+	@RequestMapping("/to_depot_add_1")
+	public ModelAndView depotAdd()
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotAdd");
+		
+		List<Users> users = us.searchAllEmp();
+		mav.addObject("users", users);
+		
+		List<Wares> wares=ws.searchAllWare();
+		mav.addObject("wares", wares);
+		
+		return mav;
+	}
+	
+	@RequestMapping("/do_depot_add_1")
+	public ModelAndView depotInsert(Depot depot, ServletRequest request) throws IOException
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotAdd");
+		//设置userId外键信息
+//		Users u = us.findUsersByEmpName(depot.getEmployeeName());
+//		depot.setUsers(u);
+		//获得操作人
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		Users user=(Users) httpRequest.getSession().getAttribute("userinfo");
+		depot.setDepotOperator(user.getUserName());
+		//获得操作时间
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
+		depot.setLastTime(sdf.format(now));
+		depot.setDepotType("1");//1为取货，2为调拨
+		ds.insert(depot);
+		
+		DepotHis dh = DepotToHis(depot);
+		dhs.insert(dh);
+		
+		List<Users> users = us.searchAllEmp();
+		mav.addObject("users", users);
+		
+		List<Wares> wares=ws.searchAllWare();
+		mav.addObject("wares", wares);
+		
+		return mav;
+	}
+	*/
+	@RequestMapping("/to_depot_edit_0")
+	public ModelAndView depotEdit(@RequestParam("id") long depotid)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotEdit");
+
+		return mav;
+	}
+	
+	@RequestMapping("/do_depot_view_3")
+	public ModelAndView depotView(@RequestParam("id") long depotid)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotView");
+
+		return mav;
+	}
+	
+	@RequestMapping("/do_depot_delete_2")
+	public String depotDelete(@RequestParam("check") List<Long> mycheck)
+	{
+		dhs.deleteMoreByHql(mycheck);
+		return "DepotSearch";
+	}
+	
+	private DepotHis DepotToHis(Depot d) {
+		// TODO Auto-generated method stub
+		DepotHis dh = new DepotHis();
+		dh.setDepotOperator(d.getDepotOperator());
+		dh.setDepotType(d.getDepotType());
+		dh.setDepotWareName(d.getDepotWareName());
+		dh.setDepotWareNum(d.getDepotWareNum());
+		dh.setDepotWarePrice(d.getDepotWarePrice());
+		dh.setEmployeeName(d.getEmployeeName());
+		dh.setLastTime(d.getLastTime());
+		dh.setShippingId(d.getShipping().getShippingId());
+		return dh;
+	}
+
+	@RequestMapping("/do_depot_update_0")
+	public String depotUpdate(Depot depot, ModelMap model)
+	{
+		ds.update(depot);
+		return "DepotSearch";
+	}
+
+	@RequestMapping("/do_mydepot_search_3")
+	public ModelAndView myDepotSearch(@RequestParam("year") String y, @RequestParam("month") String m, ServletRequest request)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("MyDepotPage");
+		
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		Users user=(Users) httpRequest.getSession().getAttribute("userinfo");
+		String ename = user.getEmployeeName();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		Date now = new Date();
+
+		String yearmonth = new String();
+		if(y.equals("")||m.equals("")){
+			yearmonth=sdf.format(now);
+			List<Depot> dlist = ds.searchAllByMonth(ename, yearmonth);
+			mav.addObject("depotlist", dlist);
+			}
+		else{
+			yearmonth = y.concat(m);
+			List<DepotHis> dlist = dhs.searchAllByMonth(ename, yearmonth);
+			mav.addObject("depotlist", dlist);
+		} 
+		return mav;
+	}
+	
+	
+	@RequestMapping("/to_depot_addU_1")
+	public ModelAndView depotAddU()
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotAddU");
+		
+		List<Users> users = us.searchAllEmp();
+		mav.addObject("users", users);
+		
+		List<Wares> wares=ws.searchAllWare();
+		mav.addObject("wares", wares);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMM");
+		Date now = new Date();
+		String thisday = sdf.format(now);
+		mav.addObject("thisday", thisday);
+		
+		Shipping sp = ss.searchTheLast();
+		long t;
+		System.out.println(sp.getShippingId().substring(7, 9));
+		System.out.println(thisday.substring(5, 7));
+		if(sp.getShippingId().substring(7, 9).equals(thisday.substring(5, 7))){//当月存在:+1
+			t = Long.parseLong(sp.getShippingId().substring(3)) + 1;
+		}else{
+			t = Long.parseLong(sdf2.format(now)+"001");
+		}
+		
+		String spid = "XSD"+t;
+		mav.addObject("shippingId", spid);
+
+//		String shippingId = "XSD"+sdf.format(now);
+//		mav.addObject("shippingId", shippingId);
+		return mav;
+	}
+	
+	@RequestMapping("/do_depot_addU_1")
+	public ModelAndView depotInsertU(ServletRequest request, Shipping sp, @RequestParam("wareId") List<Long> wids, @RequestParam("depotWareName") List<String> dwns, @RequestParam("depotWareNum") List<Integer> dwnum, @RequestParam("depotWarePrice") List<Integer> dwp, @RequestParam("dremark") List<String> rm) throws IOException
+	{
+		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("DepotPrint");
+		mav.setViewName("ShippingViewPrint");
+		
+		List <Depot> dlist = new ArrayList<Depot>();
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		Users user=(Users) httpRequest.getSession().getAttribute("userinfo");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
+		
+//		int num = 0;//页面上若修改单价后不同步，所以再次计算
+//		for(int i=0; i<dwnum.size(); i++){
+//			num += (long) (dwnum.get(i) * dwp.get(i));
+//		}
+//		sp.setMoneyThis(num);
+		
+		sp.setTableor(user.getEmployeeName());
+		sp.setLastTime(sdf.format(now));
+		ss.insert(sp);
+		
+		for(int i=0; i<dwns.size(); i++){
+			Depot d = new Depot();
+			d.setWares((Wares) ws.read(wids.get(i)));
+			d.setDepotWareName(dwns.get(i));
+			d.setDepotWareNum(dwnum.get(i));
+			d.setDepotWarePrice(dwp.get(i));
+			d.setRemark(rm.get(i));
+			
+			d.setDepotOperator(user.getUserName());
+			d.setLastTime(sdf.format(now));
+			d.setDepotType("1");
+			d.setEmployeeName(sp.getEmployeeName());
+			d.setShipping(sp);
+			
+			ws.updateActivity(wids.get(i));//更新商品表中count字段，用于热度排序
+			
+			ds.insert(d);//插入depot表
+			dlist.add(d);
+			
+			DepotHis dh = DepotToHis(d);
+			dhs.insert(dh);//插入depothis表
+			
+			//更新mystock表,此表无his表，利用year month记录
+			MyStock ms = new MyStock();
+			ms.setEmployeeName(sp.getEmployeeName());
+			ms.setWareName(dwns.get(i));
+//			ms.setYear(sdf.format(now).substring(0, 4));
+//			ms.setMonth(sdf.format(now).substring(4, 6));
+			ms.setType("1");//1未清算，2已清算
+			
+			if(mss.countRows(ms)>0){//当月存在该商品记录，更新
+				MyStock ms2 = (MyStock) mss.search(ms, 0).get(0);
+				ms2.setDepotWareNum(ms2.getDepotWareNum()+dwnum.get(i));//java.lang.NullPointerException 未赋值引起的
+				ms2.setDepotWareCost(ms2.getDepotWareCost()+(dwnum.get(i) * dwp.get(i)));
+				ms2.setCurrentWareNum(ms2.getCurrentWareNum() + dwnum.get(i));
+				ms2.setLastTime(sdf.format(now));
+				
+				mss.update(ms2);
+
+			}else{				//当月不存在该商品记录，插入
+				ms.setDepotWareNum(dwnum.get(i));
+				ms.setDepotWareCost(dwnum.get(i) * dwp.get(i));
+				ms.setYear(sdf.format(now).substring(0, 4));
+				ms.setMonth(sdf.format(now).substring(4, 6));
+				ms.setLastTime(sdf.format(now));
+				ms.setCurrentWareNum(dwnum.get(i));//第一次领取该商品时设置
+				
+				mss.insert(ms);
+			}
+		}
+		
+		java.text.DecimalFormat df=new java.text.DecimalFormat("##");
+		mav.addObject("dlist", dlist);
+		mav.addObject("shipinfo", sp);
+		mav.addObject("preSale", df.format(sp.getMoneyThis()/0.7));
+		return mav;
+	}
+	
+//	@RequestMapping("/to_depot_flit_1")
+//	public ModelAndView depotFlit()
+//	{
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("DepotFlit");
+//		
+//		List<Users> users = us.searchAllEmp();
+//		mav.addObject("users", users);
+//
+//		return mav;
+//	}
+//	
+//	@RequestMapping("/do_depot_flit_1")
+//	public String depotFlit(Depot depot1, Depot depot2) throws IOException
+//	{
+//		ds.insert(depot1);
+//		ds.insert(depot2);
+//		return "DepotFlit";
+//	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/to_depot_flit_1")
+	public ModelAndView todepotFlit()
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("DepotFlit");
+		
+		List<String> users = ds.searchAllEName();
+		mav.addObject("users", users);
+
+		return mav;
+	}
+	
+	@RequestMapping("/do_depot_flit_1")
+	public String depotFlit(@RequestParam("employeeName3")String eName1, @RequestParam("employeeName4")String eName2, @RequestParam("results")String result, ServletRequest request) throws IOException
+	{
+		Depot p1 = new Depot();
+		Depot p2 = new Depot();
+		
+//		Users u = us.findUsersByEmpName(eName1);
+//		p1.setUsers(u);
+//		u = us.findUsersByEmpName(eName2);
+//		p2.setUsers(u);
+		
+		p1.setEmployeeName(eName1);
+		p2.setEmployeeName(eName2);
+		
+		p1.setDepotType("2");
+		p2.setDepotType("2");
+		
+		HttpServletRequest httpRequest = (HttpServletRequest)request;
+		Users operator = (Users) httpRequest.getSession().getAttribute("userinfo");
+		p1.setDepotOperator(operator.getUserName());
+		p2.setDepotOperator(operator.getUserName());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = new Date();
+		p1.setLastTime(sdf.format(date));
+		p2.setLastTime(sdf.format(date));
+		
+		String[] wareList = result.split("-");
+		for(String str : wareList) {
+			String[] s = str.split("_");
+	
+			String wareName = s[0].trim();
+			String wareNum = s[1].trim();
+			String warePrice = s[2].trim();
+			
+			p1.setDepotWareName(wareName);
+			p2.setDepotWareName(wareName);
+			
+			p1.setDepotWareNum(-Integer.parseInt(wareNum));
+			p2.setDepotWareNum(Integer.parseInt(wareNum));
+			
+			p1.setDepotWarePrice(Integer.parseInt(warePrice));
+			p2.setDepotWarePrice(Integer.parseInt(warePrice));
+			
+			ds.insert(p1);
+			ds.insert(p2);
+			
+			DepotHis dh = DepotToHis(p1);
+			dhs.insert(dh);
+			dh = DepotToHis(p2);
+			dhs.insert(dh);
+		}
+		return "DepotFlit";
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/do_depot_searchByJSon_3", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> search(@RequestBody Map<String, String> model){
+		
+		String employeeName = model.get("employeeName");
+		List<String> wareList=new ArrayList<String>();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>(2);
+		List<Object[]> depotList = ds.searchByEmployeeName(employeeName);
+		
+		for(Object[] d:depotList) {					
+			if((Long)d[1]<=0)
+				continue;
+			wareList.add(String.format("%s_%d", d[0],d[1])+"-"+d[2]);
+		}		
+		
+		modelMap.put("wareList", wareList);
+		modelMap.put("success", "true");
+		return modelMap;
+	}
+}

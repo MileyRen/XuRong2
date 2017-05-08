@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-7 21:12:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.oracle.orm.PGoodsInfo" table="P_GOODS_INFO" schema="SCOTT">
+        <id name="wareId" type="string">
+            <column name="WARE_ID" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="wareName" type="string">
+            <column name="WARE_NAME" length="128" not-null="true" />
+        </property>
+        <property name="wareDesc" type="string">
+            <column name="WARE_DESC" length="1280" />
+        </property>
+        <property name="wholeStorage" type="java.lang.Long">
+            <column name="WHOLE_STORAGE" precision="10" scale="0" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <property name="wareBasePrice" type="java.lang.Long">
+            <column name="WARE_BASE_PRICE" precision="10" scale="0" />
+        </property>
+        <property name="wareType" type="string">
+            <column name="WARE_TYPE" length="32" />
+        </property>
+        <property name="wareMaxPrice" type="java.lang.Long">
+            <column name="WARE_MAX_PRICE" precision="10" scale="0" />
+        </property>
+        <property name="wareMinPrice" type="java.lang.Long">
+            <column name="WARE_MIN_PRICE" precision="10" scale="0" />
+        </property>
+        <property name="warePyHead" type="string">
+            <column name="WARE_PY_HEAD" length="20" />
+        </property>
+        <set name="PWareInfos" table="P_WARE_INFO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="WARE_ID" length="32" not-null="true" />
+            </key>
+            <one-to-many class="org.ecnu.oracle.orm.PWareInfo" />
+        </set>
+    </class>
+</hibernate-mapping>

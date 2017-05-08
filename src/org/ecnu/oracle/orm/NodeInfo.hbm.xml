@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-7 21:12:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.oracle.orm.ONodeInfo" table="NODE_INFO" schema="SCOTT">
+        <id name="nodeId" type="string">
+            <column name="NODE_ID" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="nodeName" type="string">
+            <column name="NODE_NAME" length="40" />
+        </property>
+        <property name="nodeType" type="string">
+            <column name="NODE_TYPE" length="10" not-null="true" />
+        </property>
+        <property name="parentNode" type="string">
+            <column name="PARENT_NODE" length="20" />
+        </property>
+        <property name="nodeStatus" type="java.lang.Character">
+            <column name="NODE_STATUS" length="1" />
+        </property>
+        <property name="mainIp" type="string">
+            <column name="MAIN_IP" length="15" not-null="true" />
+        </property>
+        <property name="backupIp" type="string">
+            <column name="BACKUP_IP" length="15" />
+        </property>
+        <property name="port" type="int">
+            <column name="PORT" precision="5" scale="0" not-null="true" />
+        </property>
+        <property name="QKey" type="java.lang.Long">
+            <column name="Q_KEY" precision="10" scale="0" />
+        </property>
+        <property name="QId" type="java.lang.Long">
+            <column name="Q_ID" precision="10" scale="0" />
+        </property>
+        <property name="reqMtype" type="java.lang.Long">
+            <column name="REQ_MTYPE" precision="10" scale="0" />
+        </property>
+        <property name="commPackLimit" type="long">
+            <column name="COMM_PACK_LIMIT" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="macAddr" type="string">
+            <column name="MAC_ADDR" length="20" />
+        </property>
+        <property name="nodeAddr" type="string">
+            <column name="NODE_ADDR" length="200" />
+        </property>
+        <property name="machineType" type="string">
+            <column name="MACHINE_TYPE" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

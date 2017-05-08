@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-27 15:05:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.Depot" table="depot" catalog="xurong2">
+        <id name="depotId" type="java.lang.Long">
+            <column name="DEPOT_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="shipping" class="org.ecnu.orm.Shipping" fetch="select" lazy="false">
+            <column name="SHIPPING_ID" />
+        </many-to-one>
+        <many-to-one name="wares" class="org.ecnu.orm.Wares" fetch="select" lazy="false">
+            <column name="WARE_ID" />
+        </many-to-one>
+        <property name="employeeName" type="string">
+            <column name="EMPLOYEE_NAME" length="100" not-null="true" />
+        </property>
+        <property name="depotWareName" type="string">
+            <column name="DEPOT_WARE_NAME" length="128" />
+        </property>
+        <property name="depotWareNum" type="java.lang.Integer">
+            <column name="DEPOT_WARE_NUM" />
+        </property>
+        <property name="depotWarePrice" type="java.lang.Integer">
+            <column name="DEPOT_WARE_PRICE" />
+        </property>
+        <property name="depotType" type="string">
+            <column name="DEPOT_TYPE" length="1" />
+        </property>
+        <property name="depotOperator" type="string">
+            <column name="DEPOT_OPERATOR" length="100" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" length="512" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+    </class>
+</hibernate-mapping>

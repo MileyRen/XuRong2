@@ -1,0 +1,146 @@
+package org.ecnu.controller;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
+import org.ecnu.orm.ChannelGroup;
+import org.ecnu.orm.Depot;
+import org.ecnu.orm.DepotHis;
+import org.ecnu.orm.MyStock;
+import org.ecnu.orm.Shipping;
+import org.ecnu.orm.Users;
+import org.ecnu.orm.Wares;
+import org.ecnu.service.ChannelGroupService;
+import org.ecnu.service.WaresService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller("channelGroupController")
+public class ChannelGroupController {
+	@Autowired
+	private ChannelGroupService cgs;
+	
+	@Autowired
+	private WaresService ws;
+	
+	@RequestMapping("/to_channelgroup_page_3")
+	public ModelAndView channelgroupPage()
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ChannelGroupSearch");
+
+		mav.addObject("vnames", cgs.searchAllVersion2());
+		return mav;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/do_channelgroup_search_3")
+	public ModelAndView channelgroupSearch(ChannelGroup cg)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ChannelGroupSearch");
+		
+		mav.addObject("vnames", cgs.searchAllVersion2());
+		List<ChannelGroup>cglist = new ArrayList<ChannelGroup>();
+		cglist = (List<ChannelGroup>) cgs.searchAll(cg);
+		mav.addObject("cglist", cglist);
+		mav.addObject("what", cg.getVersionName());
+		return mav;
+	}
+	
+	@RequestMapping("/to_channelgroup_add_1")
+	public ModelAndView channelgroupAdd()
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ChannelGroupAdd");
+
+		mav.addObject("wslist", ws.searchAllWare());
+		return mav;
+	}
+	
+	@RequestMapping("/do_channelgroup_add_1")
+	public ModelAndView cginsert(@RequestParam("versionName") String vname, @RequestParam("wid") List<Long> wids, @RequestParam("cid") List<String> cids, @RequestParam("ns") List<Integer> nss, @RequestParam("so") List<Integer> sos, @RequestParam("ty") List<String> tys) throws IOException
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ChannelGroupAdd");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
+		
+		for(int i=0; i<wids.size(); i++){
+			ChannelGroup cg = new ChannelGroup();
+			cg.setWares((Wares) ws.read(wids.get(i)));
+			cg.setChannelId(cids.get(i));
+			cg.setNormalStock(nss.get(i));
+			cg.setVersionName(vname);
+			cg.setType(tys.get(i));
+			cg.setLastTime(sdf.format(now));
+			cg.setStdOut(sos.get(i));
+			
+			cgs.insert(cg);
+		}
+	return mav;
+	}
+	
+	@RequestMapping("/to_channelgroup_edit_0")
+	public ModelAndView tocgEdit(@RequestParam("id") Long cgid)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ChannelGroupEdit");
+
+//		ChannelGroup cg = new ChannelGroup();
+//		cg.setId(cgid);
+//		cg = (ChannelGroup) cgs.search(cg, 0).get(0);
+//		mav.addObject("cginfo", (ChannelGroup) cgs.search(cg, 0).get(0));
+		mav.addObject("cginfo", cgs.read(cgid));
+		mav.addObject("wslist", ws.searchAllWare());
+		return mav;
+	}
+	
+	@RequestMapping("/do_channelgroup_edit_0")
+	public ModelAndView docgEdit(ChannelGroup cg)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ChannelGroupSearch");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
+		cg.setLastTime(sdf.format(now));
+		cgs.update(cg);
+//		mav.addObject("cginfo", cg);
+		return mav;
+	}
+	
+	//use JSON
+	@RequestMapping(value="/do_channelgroup_find_3", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> userfind(@RequestBody Map<String, String> model)
+	{
+		Map<String, String> map = new HashMap<String, String>(1);  
+		ChannelGroup cg = new ChannelGroup();
+		cg.setVersionName(model.get("versionName"));
+		if(cgs.searchAll(cg).size()<=0)
+		{
+			map.put("success", "true");  
+		}
+		else 
+		{
+			map.put("success", "false");  
+		}
+		return map;
+	}
+}

@@ -1,0 +1,40 @@
+10
+
+dir
+703
+svn://222.204.232.48/XuRong2/src/org/ecnu/oracle
+svn://222.204.232.48
+
+
+
+2013-03-22T15:16:29.857017Z
+609
+ybjiang
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+41549c26-562e-0148-bb27-cee8e0eb581e
+
+service
+dir
+
+controller
+dir
+
+dao
+dir
+
+orm
+dir
+

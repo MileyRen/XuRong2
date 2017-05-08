@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-19 10:10:02 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.MyStock" table="mystock" catalog="xurong2">
+        <id name="stockId" type="java.lang.Long">
+            <column name="STOCK_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="employeeName" type="string">
+            <column name="EMPLOYEE_NAME" length="100" not-null="true" />
+        </property>
+        <property name="year" type="string">
+            <column name="YEAR" length="4" />
+        </property>
+        <property name="month" type="string">
+            <column name="MONTH" length="2" />
+        </property>
+        <property name="nodeName" type="string">
+            <column name="NODE_NAME" length="40" />
+        </property>
+        <property name="wareName" type="string">
+            <column name="WARE_NAME" length="128" />
+        </property>
+        <property name="lastMonthNum" type="java.lang.Integer">
+            <column name="LAST_MONTH_NUM" />
+        </property>
+        <property name="lastMonthCost" type="java.lang.Integer">
+            <column name="LAST_MONTH_COST" />
+        </property>
+        <property name="depotWareNum" type="java.lang.Integer">
+            <column name="DEPOT_WARE_NUM" />
+        </property>
+        <property name="checkStoreNum" type="java.lang.Integer">
+            <column name="CHECK_STORE_NUM" />
+        </property>
+        <property name="checkWareCost" type="java.lang.Integer">
+            <column name="CHECK_WARE_COST" />
+        </property>
+        <property name="currentWareNum" type="java.lang.Integer">
+            <column name="CURRENT_WARE_NUM" />
+        </property>
+        <property name="depotWareCost" type="java.lang.Integer">
+            <column name="DEPOT_WARE_COST" />
+        </property>
+        <property name="checkType" type="string">
+            <column name="CHECK_TYPE" length="4" />
+        </property>
+        <property name="type" type="string">
+            <column name="TYPE" length="4" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-27 15:05:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.Wares" table="wares" catalog="xurong2">
+        <id name="wareId" type="java.lang.Long">
+            <column name="WARE_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="wareCode" type="string">
+            <column name="WARE_CODE" length="32" not-null="true" />
+        </property>
+        <property name="wareName" type="string">
+            <column name="WARE_NAME" length="128" />
+        </property>
+        <property name="wareNorm" type="string">
+            <column name="WARE_NORM" length="32" />
+        </property>
+        <property name="wareUnit" type="string">
+            <column name="WARE_UNIT" length="8" />
+        </property>
+        <property name="wareBasePrice" type="java.lang.Integer">
+            <column name="WARE_BASE_PRICE" />
+        </property>
+        <property name="wareType" type="string">
+            <column name="WARE_TYPE" length="32" />
+        </property>
+        <property name="wareMaxPrice" type="java.lang.Integer">
+            <column name="WARE_MAX_PRICE" />
+        </property>
+        <property name="wareMinPrice" type="java.lang.Integer">
+            <column name="WARE_MIN_PRICE" />
+        </property>
+        <property name="wareDesc" type="string">
+            <column name="WARE_DESC" length="512" />
+        </property>
+        <property name="wareSimpleCode" type="string">
+            <column name="WARE_SIMPLE_CODE" length="20" />
+        </property>
+        <property name="count" type="java.lang.Long">
+            <column name="COUNT" />
+        </property>
+        <property name="wareStatus" type="string">
+            <column name="WARE_STATUS" length="4" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <set name="depots" table="depot" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="WARE_ID" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Depot" />
+        </set>
+    </class>
+</hibernate-mapping>

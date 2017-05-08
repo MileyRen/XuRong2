@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-7 21:12:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.oracle.orm.GroupInfoDtl" table="GROUP_INFO_DTL" schema="SCOTT">
+        <composite-id name="id" class="org.ecnu.oracle.orm.GroupInfoDtlId">
+            <key-property name="groupId" type="string">
+                <column name="GROUP_ID" length="20" />
+            </key-property>
+            <key-property name="nodeId" type="string">
+                <column name="NODE_ID" length="20" />
+            </key-property>
+        </composite-id>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+    </class>
+</hibernate-mapping>

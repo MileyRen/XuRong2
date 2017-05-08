@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-12 14:15:56 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.NodeGroupInfo" table="node_group_info" catalog="xurong2">
+        <id name="nodeGroupId" type="string">
+            <column name="NODE_GROUP_ID" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="nodeGroupName" type="string">
+            <column name="NODE_GROUP_NAME" length="40" />
+        </property>
+        <property name="nodeGroupType" type="string">
+            <column name="NODE_GROUP_TYPE" length="40" />
+        </property>
+        <property name="nodeGroupDesc" type="string">
+            <column name="NODE_GROUP_DESC" length="128" />
+        </property>
+        <property name="groupParentId" type="string">
+            <column name="GROUP_PARENT_ID" length="20" />
+        </property>
+        <set name="nodeInfos" table="node_info" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NODE_GROUP_ID" length="20" />
+            </key>
+            <one-to-many class="org.ecnu.orm.NodeInfo" />
+        </set>
+    </class>
+</hibernate-mapping>

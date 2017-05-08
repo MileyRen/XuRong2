@@ -1,0 +1,35 @@
+#MySQL
+jdbc.driverClassName=com.mysql.jdbc.Driver
+<<<<<<< .mine
+#jdbc.url=jdbc:mysql://222.204.232.23:3306/xurong2?characterEncoding=UTF-8
+jdbc.url=jdbc:mysql://localhost:3306/xurong2?characterEncoding=UTF-8
+=======
+jdbc.url=jdbc:mysql://222.204.232.48:3306/xurong2?characterEncoding=UTF-8
+>>>>>>> .r768
+jdbc.username=root
+jdbc.password=asd123
+
+
+#Oracle in localhost
+oracle.jdbc.driverClassName=oracle.jdbc.driver.OracleDriver
+oracle.jdbc.url=jdbc:oracle:thin:@222.204.232.48:1521:orcl
+oracle.jdbc.username=scott
+oracle.jdbc.password=asd123
+
+#Oracle in zj
+#oracle.jdbc.driverClassName=oracle.jdbc.driver.OracleDriver
+#oracle.jdbc.url=jdbc:oracle:thin:@222.204.232.218:1521:taign
+#oracle.jdbc.username=scott
+#oracle.jdbc.password=asd123
+
+#Oracle
+#oracle.jdbc.driverClassName=oracle.jdbc.driver.OracleDriver
+#oracle.jdbc.url=jdbc:oracle:thin:@202.101.26.24:1521:tzora9i
+#oracle.jdbc.username=TZMANAGE
+#oracle.jdbc.password=TZMANAGE 
+
+#SQL Server
+#jdbc.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#jdbc.url=jdbc:sqlserver://ECNU515-PC:1433;databaseName=TAIGN
+#jdbc.username=sa
+#jdbc.password=asd123

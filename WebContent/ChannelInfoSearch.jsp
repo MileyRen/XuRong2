@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/invalid.css" type="text/css" media="screen" />
+<link href="css/title.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript">
+function dosearch(choose)
+{ 
+	document.forms["search"].action= choose;
+	document.forms["search"].submit(); 
+}
+
+</script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script> 
+<script type="text/javascript" src="js/simpla.jquery.configuration.js"></script>
+<script type="text/javascript" src="js/cal.js"></script>
+<script type="text/javascript" src="js\My97DatePicker\WdatePicker.js"></script>
+<title>查询货道信息</title>
+</head>
+<body>
+<div id="main-content">
+<p><font style="font-family:'宋体'; font-size:30px; font-weight: bold;">
+货道当前信息</font></p>
+<p>&nbsp;</p>
+
+<div class="content-box">
+<div class="content-box-content"> 
+<form name="search" action="<c:url value='/do_channel_search_3?PageNo=0'/>" method="post" >
+<table style="font-size: 16px;">
+<tr style="background: #fff;vertical-align: bottom; padding-bottom: 0px;">
+<td  style="width:8%; ">查询条件</td>
+<td  style="width:15%; padding-left: 0px"><input class="text-input" style="width: 80%" type="text" name="nodeInfo.nodeName" value="${p.nodeInfo.nodeName}"/>
+<input class="text-input" style="width: 80%" type="hidden" name="id" value="${p.id}"/></td>
+<td  style="width:15%; padding-left: 0px"><input class="text-input" style="width: 80%" type="text" name="channelId" value="${p.channelId}"/></td>
+<td  style="width:15%; padding-left: 0px"><input class="text-input" style="width: 80%" type="text" name="wareName" value="${p.wareName}"/></td>
+<td  style="width:15%; padding-left: 0px"><!-- <input class="text-input" style="width: 80%" type="text" name="isSpecial" value="${p.isSpecial}"/> -->
+<select name="isSpecial" id="isSpecial">
+	<c:if test="${p.isSpecial=='1'}"><option value="1">否</option></c:if>
+	<c:if test="${p.isSpecial=='2'}"><option value="2">是</option></c:if>
+	<option value="">请选择</option>
+	<option value="1">否</option>
+	<option value="2">是</option>
+</select>
+</td>
+<td  style="width:8%; padding-left: 0px">
+<input class="text-input" style="width: 90%" type="text" name="mintime" value="${ltime}" maxlength="8"  onFocus="WdatePicker({dateFmt:'yyyyMMdd'})"/>
+</td>
+<td style="width:8%; padding-left: 0px">
+<input class="text-input" style="width: 90%" type="text" name="maxtime" value="${rtime}" maxlength="8"  onFocus="WdatePicker({dateFmt:'yyyyMMdd'})"/>
+</td>
+<td  style="width:6%; padding-left: 0px"><input class="text-input" style="width: 80%" type="text" name="currentNumber" value="${p.currentNumber}"/></td>
+<td  style="width:8%; padding-left: 0px"><input type="submit" name="btnSearch" id="btnSearch"  class="button" value="搜索"/></td>
+<td  style="width:6%" colspan="1"><input type="button" name="reset" id="reset"  class="button" value="重置"/></td>
+<!-- <td  style="width:6%; padding-left: 0px"><input type="reset" name="reset" id="reset"  class="button" value="重置"/></td> -->
+<td  style="width:6%" colspan="1"></td>
+</tr>
+</table>
+</form>  
+
+<form name="operate" action="<c:url value="/do_channel_editIssp_1"/>" method="post">
+<table>
+<thead>
+<tr class="tr_top">
+<th  class="title" style="width:8%"><input type="checkbox" class="check-all" onChange="checkAll(this.checked)"/>全选</th>
+<th  class="title" style="width:15%">设备铭牌号</th>
+<th  class="title" style="width:15%">货道编号</th>
+<th  class="title" style="width:15%">商品名称</th>
+<th  class="title" style="width:6%">特价</th>
+<th  class="title" style="width:16%" colspan="2" align="center">更新时间</th>
+<th  class="title" style="width:6%">当前量</th>
+<th  class="title" style="width:6%">加货量</th>
+<th  class="title" style="width:6%">额定量</th>
+<!-- <th  class="title" style="width:6%">操作</th> -->
+</tr>
+</thead>
+<tbody>
+<c:forEach items="${cilist}" var="channel">
+<tr>
+<td  style="width:8%"><input type="checkbox" name="check" value="${channel.id}"/></td>
+	<td style="width:15%">${channel.nodeInfo.nodeName}</td>
+	<td style="width:15%">${channel.channelId}</td>
+	<td style="width:15%">${channel.wareName}</td>
+	<td style="width:6%">
+		<c:if test="${channel.isSpecial=='1'}">否</c:if>
+		<c:if test="${channel.isSpecial=='2'}">是</c:if>
+	</td>
+	<td style="width:16%" colspan="2" align="center">${channel.lastTime.toString().substring(0, 19)}</td>
+	<td style="width:6%">
+	<c:if test="${channel.currentNumber=='0'}"><font color="red">${channel.currentNumber}</font></c:if>
+	<c:if test="${channel.currentNumber=='1' || channel.currentNumber=='2'|| channel.currentNumber=='3'}"><font color="blue">${channel.currentNumber}</font></c:if>
+	<c:if test="${channel.currentNumber!='0'&&channel.currentNumber!='1'&&channel.currentNumber!='2'&&channel.currentNumber!='3'}">${channel.currentNumber}</c:if>
+	</td>
+	<td style="width:8%">${channel.incrementNumber}</td>
+	<td style="width:6%">${channel.normalStock}</td>
+	<!-- 
+	<td style="width:6%"><a href= '<c:url value="/to_channel_view_3"/>?id=${channel.id}'>详情</a></td>
+	 -->
+</tr>
+</c:forEach>
+</tbody>
+</table>
+<input type="submit" name="submit" value="更改特价状态"  class="button" />
+</form>
+<div class="pagination">
+	共有${length+1-1}页&nbsp; 当前第${PageNo+1}页&nbsp;	
+	<c:if test="${PageNo+1=='1'}">
+	<a ><font color="gray" >首页</font></a>
+	<a ><font color="gray" >上一页</font></a>	
+	</c:if>
+	<c:if test="${PageNo+1!='1'}">
+	<a href="javascript:dosearch('do_channel_search_3?PageNo=0')">首页</a>
+	<a href="javascript:dosearch('do_channel_search_3?PageNo=${PageNo-1}')">上一页</a>
+	</c:if>
+	<c:if test="${length+1=='1'||PageNo+1==length}">
+	<a ><font color="gray">下一页</font></a>
+	<a ><font color="gray">尾页</font></a>
+	</c:if>
+	<c:if test="${length+1!='1'&&PageNo+1!=length}">
+	<a href="javascript:dosearch('do_channel_search_3?PageNo=${PageNo+1}')">下一页</a>
+	<a href="javascript:dosearch('do_channel_search_3?PageNo=${length-1}')">尾页</a>
+	</c:if>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-13 12:14:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.UserGroup" table="user_group" catalog="xurong2">
+        <id name="groupId" type="java.lang.Long">
+            <column name="GROUP_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="groupType" type="string">
+            <column name="GROUP_TYPE" length="10" />
+        </property>
+        <property name="groupName" type="string">
+            <column name="GROUP_NAME" length="40" />
+        </property>
+        <property name="groupLeader" type="string">
+            <column name="GROUP_LEADER" length="20" />
+        </property>
+        <property name="groupDesc" type="string">
+            <column name="GROUP_DESC" length="128" />
+        </property>
+        <property name="parentId" type="java.lang.Long">
+            <column name="PARENT_ID" />
+        </property>
+        <property name="groupNumber" type="java.lang.Integer">
+            <column name="GROUP_NUMBER" />
+        </property>
+        <set name="userses" table="users" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_GROUP_ID" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Users" />
+        </set>
+    </class>
+</hibernate-mapping>

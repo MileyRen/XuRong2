@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-19 10:10:02 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.Profit" table="profit" catalog="xurong2">
+        <id name="profitId" type="java.lang.Long">
+            <column name="PROFIT_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="employeeName" type="string">
+            <column name="EMPLOYEE_NAME" length="100" />
+        </property>
+        <property name="year" type="string">
+            <column name="YEAR" length="4" />
+        </property>
+        <property name="month" type="string">
+            <column name="MONTH" length="2" />
+        </property>
+        <property name="turnOverCard" type="java.lang.Integer">
+            <column name="TURN_OVER_CARD" />
+        </property>
+        <property name="turnOverCash" type="java.lang.Integer">
+            <column name="TURN_OVER_CASH" />
+        </property>
+        <property name="moneyCount" type="java.lang.Integer">
+            <column name="MONEY_COUNT" />
+        </property>
+        <property name="loactionAllowance" type="java.lang.Integer">
+            <column name="LOACTION_ALLOWANCE" />
+        </property>
+        <property name="locationCost" type="java.lang.Integer">
+            <column name="LOCATION_COST" />
+        </property>
+        <property name="carGasCost" type="java.lang.Integer">
+            <column name="CAR_GAS_COST" />
+        </property>
+        <property name="carRepaireCost" type="java.lang.Integer">
+            <column name="CAR_REPAIRE_COST" />
+        </property>
+        <property name="manageCost" type="java.lang.Integer">
+            <column name="MANAGE_COST" />
+        </property>
+        <property name="wages" type="java.lang.Integer">
+            <column name="WAGES" />
+        </property>
+        <property name="profit" type="java.lang.Integer">
+            <column name="PROFIT" />
+        </property>
+        <property name="insurances" type="java.lang.Integer">
+            <column name="INSURANCES" />
+        </property>
+        <property name="cost1" type="java.lang.Integer">
+            <column name="COST1" />
+        </property>
+        <property name="wareCost" type="java.lang.Integer">
+            <column name="WARE_COST" />
+        </property>
+        <property name="cost3" type="java.lang.Integer">
+            <column name="COST3" />
+        </property>
+        <property name="cost4" type="java.lang.Integer">
+            <column name="COST4" />
+        </property>
+        <property name="cost5" type="java.lang.Integer">
+            <column name="COST5" />
+        </property>
+        <property name="cost6" type="java.lang.Integer">
+            <column name="COST6" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <property name="type" type="string">
+            <column name="TYPE" length="4" />
+        </property>
+    </class>
+</hibernate-mapping>

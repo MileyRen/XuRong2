@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-5-10 0:34:17 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.ChannelGroup" table="channel_group" catalog="xurong2">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="wares" class="org.ecnu.orm.Wares" fetch="select" lazy="false">
+            <column name="WARE_ID" not-null="true" />
+        </many-to-one>
+        <property name="versionName" type="string">
+            <column name="VERSION_NAME" length="40" />
+        </property>
+        <property name="channelId" type="string">
+            <column name="CHANNEL_ID" length="50" />
+        </property>
+        <property name="normalStock" type="java.lang.Integer">
+            <column name="NORMAL_STOCK" />
+        </property>
+        <property name="stdOut" type="java.lang.Integer">
+            <column name="STD_OUT" />
+        </property>
+        <property name="type" type="string">
+            <column name="TYPE" length="4" />
+        </property>
+        <!-- -->
+        <property name="des" type="string">
+            <column name="DES" length="128" />
+        </property>
+         
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+    </class>
+</hibernate-mapping>

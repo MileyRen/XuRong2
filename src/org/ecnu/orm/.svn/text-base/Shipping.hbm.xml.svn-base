@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-27 15:05:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.orm.Shipping" table="shipping" catalog="xurong2">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="shippingId" type="string">
+            <column name="SHIPPING_ID" length="18" not-null="true" />
+        </property>
+        <property name="depotDay" type="string">
+            <column name="DEPOT_DAY" length="14" />
+        </property>
+        <property name="employeeName" type="string">
+            <column name="EMPLOYEE_NAME" length="100" not-null="true" />
+        </property>
+        <property name="moneyThis" type="java.lang.Integer">
+            <column name="Money_THIS" />
+        </property>
+        <property name="moneyAll" type="java.lang.Integer">
+            <column name="Money_ALL" />
+        </property>
+        <property name="humanName" type="string">
+            <column name="HUMAN_NAME" length="128" />
+        </property>
+        <property name="wareHouse" type="string">
+            <column name="WARE_HOUSE" length="32" />
+        </property>
+        <property name="driverName" type="string">
+            <column name="DRIVER_NAME" length="32" />
+        </property>
+        <property name="operator" type="string">
+            <column name="OPERATOR" length="100" />
+        </property>
+        <property name="tableor" type="string">
+            <column name="TABLEOR" length="100" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" length="5120" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <set name="depots" table="depot" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SHIPPING_ID" />
+            </key>
+            <one-to-many class="org.ecnu.orm.Depot" />
+        </set>
+    </class>
+</hibernate-mapping>

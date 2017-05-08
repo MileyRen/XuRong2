@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+<!-- 
+  <table-filter match-catalog="xurong2" match-name="channel_his"/>
+  <table-filter match-catalog="xurong2" match-name="channel_his_dtl"/>
+  <table-filter match-catalog="xurong2" match-name="channel_info"/>
+  <table-filter match-catalog="xurong2" match-name="node_group_info"/>
+  <table-filter match-catalog="xurong2" match-name="node_info"/>
+  <table-filter match-catalog="xurong2" match-name="role"/>
+  <table-filter match-catalog="xurong2" match-name="user_group"/>
+  <table-filter match-catalog="xurong2" match-name="users"/>
+  <table-filter match-catalog="xurong2" match-name="ware_info"/>
+  -->
+  <table-filter match-catalog="xurong2" match-name="node_mapping"/>
+</hibernate-reverse-engineering>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-7 21:12:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.ecnu.oracle.orm.RptTxnDtl" table="RPT_TXN_DTL" schema="SCOTT">
+        <composite-id name="id" class="org.ecnu.oracle.orm.RptTxnDtlId">
+            <key-property name="workDate" type="string">
+                <column name="WORK_DATE" length="8" />
+            </key-property>
+            <key-property name="batchNo" type="int">
+                <column name="BATCH_NO" precision="5" scale="0" />
+            </key-property>
+            <key-property name="posId" type="string">
+                <column name="POS_ID" length="8" />
+            </key-property>
+            <key-property name="txnEventCode" type="string">
+                <column name="TXN_EVENT_CODE" length="2" />
+            </key-property>
+            <key-property name="passNo" type="string">
+                <column name="PASS_NO" length="6" />
+            </key-property>
+            <key-property name="salesId" type="string">
+                <column name="SALES_ID" length="32" />
+            </key-property>
+        </composite-id>
+        <property name="outNum" type="big_decimal">
+            <column name="OUT_NUM" precision="20" scale="0" />
+        </property>
+        <property name="adverClick" type="big_decimal">
+            <column name="ADVER_CLICK" precision="20" scale="0" />
+        </property>
+        <property name="amout" type="big_decimal">
+            <column name="AMOUT" precision="20" scale="0" />
+        </property>
+        <property name="reserved1" type="string">
+            <column name="RESERVED1" length="32" />
+        </property>
+        <property name="lastTime" type="string">
+            <column name="LAST_TIME" length="14" />
+        </property>
+        <property name="insertAmount" type="big_decimal">
+            <column name="INSERT_AMOUNT" precision="20" scale="0" />
+        </property>
+        <property name="changeAmount" type="big_decimal">
+            <column name="CHANGE_AMOUNT" precision="20" scale="0" />
+        </property>
+        <property name="belongTo" type="string">
+            <column name="BELONG_TO" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

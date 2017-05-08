@@ -1,0 +1,52 @@
+10
+
+dir
+703
+svn://222.204.232.48/XuRong2/src/org/ecnu
+svn://222.204.232.48
+
+
+
+2013-04-19T09:29:53.199844Z
+702
+ymb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+41549c26-562e-0148-bb27-cee8e0eb581e
+
+service
+dir
+
+task
+dir
+
+controller
+dir
+
+dao
+dir
+
+oracle
+dir
+
+servletListener
+dir
+
+orm
+dir
+
+util
+dir
+

@@ -1,0 +1,36 @@
+
+<!-- 说明：*表示修改；+表示添加文件；-表示删除文件 -->
+2013-6-19 
+*/XuRong2/WebContent/NodeMapSearch.jsp --售货机分配查询页面，调整删除功能，优化操作
+*/XuRong2/WebContent/FinanceCheck.jsp --修改利润清算页面；
+*/XuRong2/src/org/ecnu/controller/NodeMapController.java
+
+2013-6-28
+*/XuRong2/WebContent/ShippingSearch.jsp --修改不能翻页错误
+*/XuRong2/WebContent/FinanceCheck.jsp  --修改doAjax无数据时不显示内容
+*/XuRong2/WebContent/DepotFlit.jsp  --完善调拨模块
+*/XuRong2/src/org/ecnu/controller/DepotController.java
+
+2013-6-29添加售货机来源NODE_FROM#1.oracle；2.2.0新建
+*/XuRong2/src/org/ecnu/orm/NodeInfo.java
+*/XuRong2/src/org/ecnu/orm/NodeInfo.hbm.xml
+*/XuRong2/src/org/ecnu/controller/NodeInfoController.java
+*/XuRong2/WebContent/ChannelGroupAdd.jsp  --检测未添加记录时提交错误
+
+2013-7-1 
+*/XuRong2/src/org/ecnu/controller/DepotController.java --更新调拨后未更新存货量的错误
+*/XuRong2/src/org/ecnu/controller/UserController.java --新建用户时检测为营业员账户后在profit表中添加记录
+
+2013-7-3
+*/XuRong2/WebContent/DepotAddU.jsp  --检测商品未加价格后引起的空值错误
+*/XuRong2/src/org/ecnu/controller/MyStockController.java --新领取商品时上月记录为0时引起的错误--提供上次清算时间
+*/XuRong2/WebContent/FinanceCheck.jsp --增加做财务清算的组是否已经做过商品清算判断
+*/XuRong2/src/org/ecnu/controller/ProfitController.java --将利润计算由现金交易改为上缴金钱数
+*/XuRong2/WebContent/StockCheck.jsp --提交前检测是否有记录
+
+2013-7-12
+//+/XuRong2/WebContent/ChannelGroupEditAll.jsp  --修改整体货道组 --不用了，太麻烦
+*/XuRong2/WebContent/left.jsp --增加货道组添加货道链接
+*/XuRong2/src/org/ecnu/controller/ChannelGroupController.java --添加货道函数；更新删除和更新货道函数
+*/XuRong2/src/org/ecnu/orm/Wares.xml  --更新set lazy="false" 
++/XuRong2/WebContent/ChannelGroupAddChannel.jsp  --货道组添加货道页面
